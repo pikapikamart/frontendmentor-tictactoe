@@ -167,7 +167,7 @@ const reducer = ( draft: Game, action: Action ) =>{
         currentMode.scores[action.player.toLowerCase()]++;
       }
 
-      if ( fullBoard(board) ) {
+      if ( fullBoard(board) && !gameResult.win ) {
         currentMode.scores.ties++;
       }
 
@@ -276,7 +276,7 @@ const reducer = ( draft: Game, action: Action ) =>{
     case "ONLINE_EXIT": 
       draft.online?.socket.emit(EVENTS.CLIENT.EXIT_ONLINE, draft.online.createdRoom?.roomId?? draft.online.onGoingGame?.roomId);
     
-      // draft.online?.socket.off();
+      draft.online?.socket.off();
       return;
     default:
       return draft;  
