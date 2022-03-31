@@ -15,13 +15,7 @@ const OnlinePage: NextPage<OnlinePageProps> = ({ socket_uri }: OnlinePageProps) 
   const dispatch = useDispatch();
 
   useEffect(() =>{
-    if ( gameMode!=="online" ) {
-      dispatch({ type: "START_ONLINE_MODE", socket_uri });
-    }
-
-    if ( gameMode==="online" && !online ) {
-      dispatch({ type: "START_ONLINE_MODE", socket_uri });
-    }
+    dispatch({ type: "START_ONLINE_MODE", socket_uri });
 
     return () => dispatch({ type: "ONLINE_EXIT" });
   }, [])

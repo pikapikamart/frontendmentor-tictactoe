@@ -67,9 +67,9 @@ const Online = () =>{
         exited? requestCancellation("Room owner has removed the room.") : dispatch({ type: "ONLINE_JOIN_REQUEST", success, message })
       ))
 
-      online.socket.on(EVENTS.SERVER.ROOM_REQUEST, ( requested: boolean, exited?: boolean ) => (
+      online.socket.on(EVENTS.SERVER.ROOM_REQUEST, ( requested: boolean, exited?: boolean ) => {
         exited? requestCancellation("Room joiner has left the server.") : setShowRoomRequest(prev => ({ ...prev, requested }))
-      ))
+      })
 
       online.socket.on(EVENTS.SERVER.GAME_START, ( initialState: InitialOnlineGameState) => {
         dispatch({ 

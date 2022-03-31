@@ -196,7 +196,12 @@ const reducer = ( draft: Game, action: Action ) =>{
 
       return;
     case "START_ONLINE_MODE":
-      const socket = io(action.socket_uri);
+      let socket = draft.online?.socket;
+      
+      if( !socket ) {
+        socket = io(action.socket_uri);
+
+      }
       const initialOnlineState: Online = {
         socket,
         rooms: [],
@@ -265,18 +270,13 @@ const reducer = ( draft: Game, action: Action ) =>{
 
       const { onGoingGame, ...rest } = draft.online;
       draft.online = rest;
-
     }
 
       return;
     case "ONLINE_EXIT": 
       draft.online?.socket.emit(EVENTS.CLIENT.EXIT_ONLINE, draft.online.createdRoom?.roomId?? draft.online.onGoingGame?.roomId);
-
-      const { online, ...rest } = draft;
-      draft = rest;
-      draft.gameMode = null;
-      online?.socket.off();
     
+      // draft.online?.socket.off();
       return;
     default:
       return draft;  
